@@ -1,8 +1,8 @@
-using SideKick.Domain.Users;
-using SideKick.Infrastructure.Common.Persistence;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+using SideKick.Domain.Users;
+using SideKick.Infrastructure.Common.Persistence;
 
 namespace SideKick.Infrastructure.Users.Persistence;
 

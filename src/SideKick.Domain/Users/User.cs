@@ -1,9 +1,8 @@
+using ErrorOr;
 using SideKick.Domain.Common;
 using SideKick.Domain.Reminders;
 using SideKick.Domain.Subscriptions;
 using SideKick.Domain.Users.Events;
-
-using ErrorOr;
 
 using Throw;
 

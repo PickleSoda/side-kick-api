@@ -1,10 +1,10 @@
 ﻿using System.Text;
 
-using SideKick.Infrastructure.Security.TokenGenerator;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+
+using SideKick.Infrastructure.Security.TokenGenerator;
 
 namespace SideKick.Infrastructure.Security.TokenValidation;
 

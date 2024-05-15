@@ -1,7 +1,7 @@
-using SideKick.Domain.Reminders;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+using SideKick.Domain.Reminders;
 
 namespace SideKick.Infrastructure.Reminders.Persistence;
 

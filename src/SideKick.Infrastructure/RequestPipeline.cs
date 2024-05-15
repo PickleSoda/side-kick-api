@@ -1,6 +1,6 @@
-using SideKick.Infrastructure.Common.Middleware;
-
 using Microsoft.AspNetCore.Builder;
+
+using SideKick.Infrastructure.Common.Middleware;
 
 namespace SideKick.Infrastructure;
 

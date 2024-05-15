@@ -1,10 +1,10 @@
-using SideKick.Application.Common.Interfaces;
-using SideKick.Application.Subscriptions.Common;
-using SideKick.Domain.Users;
-
 using ErrorOr;
 
 using MediatR;
+
+using SideKick.Application.Common.Interfaces;
+using SideKick.Application.Subscriptions.Common;
+using SideKick.Domain.Users;
 
 namespace SideKick.Application.Subscriptions.Queries.GetSubscription;
 

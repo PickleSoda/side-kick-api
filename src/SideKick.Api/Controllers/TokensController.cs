@@ -1,12 +1,12 @@
-using SideKick.Application.Authentication.Queries.Login;
-using SideKick.Application.Tokens.Queries.Generate;
-using SideKick.Contracts.Common;
-using SideKick.Contracts.Tokens;
-
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+using SideKick.Application.Authentication.Queries.Login;
+using SideKick.Application.Tokens.Queries.Generate;
+using SideKick.Contracts.Common;
+using SideKick.Contracts.Tokens;
 
 using DomainSubscriptionType = SideKick.Domain.Users.SubscriptionType;
 

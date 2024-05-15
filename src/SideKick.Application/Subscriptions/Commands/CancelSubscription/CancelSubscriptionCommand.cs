@@ -1,7 +1,7 @@
+using ErrorOr;
+
 using SideKick.Application.Common.Security.Request;
 using SideKick.Application.Common.Security.Roles;
-
-using ErrorOr;
 
 namespace SideKick.Application.Subscriptions.Commands.CancelSubscription;
 

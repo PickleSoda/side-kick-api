@@ -1,11 +1,11 @@
-using SideKick.Application.Common.Interfaces;
-using SideKick.Domain.Users;
-using SideKick.Infrastructure.Common;
-
 using FluentEmail.Core;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+using SideKick.Application.Common.Interfaces;
+using SideKick.Domain.Users;
+using SideKick.Infrastructure.Common;
 
 namespace SideKick.Infrastructure.Reminders.BackgroundServices;
 

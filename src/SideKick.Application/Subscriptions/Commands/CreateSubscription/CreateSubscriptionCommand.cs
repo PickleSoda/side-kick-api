@@ -1,10 +1,10 @@
+using ErrorOr;
+
 using SideKick.Application.Common.Security.Permissions;
 using SideKick.Application.Common.Security.Policies;
 using SideKick.Application.Common.Security.Request;
 using SideKick.Application.Subscriptions.Common;
 using SideKick.Domain.Users;
-
-using ErrorOr;
 
 namespace SideKick.Application.Subscriptions.Commands.CreateSubscription;
 

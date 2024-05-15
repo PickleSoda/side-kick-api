@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
 using SideKick.Application.Common.Interfaces;
 using SideKick.Domain.Users;
 using SideKick.Infrastructure.Common;
-
-using Microsoft.EntityFrameworkCore;
 
 namespace SideKick.Infrastructure.Users.Persistence;
 

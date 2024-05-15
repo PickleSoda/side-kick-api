@@ -1,9 +1,9 @@
+using ErrorOr;
+
 using SideKick.Application.Common.Security.Permissions;
 using SideKick.Application.Common.Security.Policies;
 using SideKick.Application.Common.Security.Request;
 using SideKick.Domain.Reminders;
-
-using ErrorOr;
 
 namespace SideKick.Application.Reminders.Commands.SetReminder;
 

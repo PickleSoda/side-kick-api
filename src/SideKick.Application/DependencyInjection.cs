@@ -1,8 +1,6 @@
-using SideKick.Application.Common.Behaviors;
-
 using FluentValidation;
-
 using Microsoft.Extensions.DependencyInjection;
+using SideKick.Application.Common.Behaviors;
 
 namespace SideKick.Application;
 

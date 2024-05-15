@@ -1,7 +1,7 @@
+using ErrorOr;
+
 using SideKick.Application.Common.Security.Request;
 using SideKick.Infrastructure.Security.CurrentUserProvider;
-
-using ErrorOr;
 
 namespace SideKick.Infrastructure.Security.PolicyEnforcer;
 

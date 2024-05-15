@@ -1,9 +1,9 @@
-using SideKick.Application.Common.Interfaces;
-using SideKick.Domain.Reminders;
-
 using ErrorOr;
 
 using MediatR;
+
+using SideKick.Application.Common.Interfaces;
+using SideKick.Domain.Reminders;
 
 namespace SideKick.Application.Reminders.Queries.ListReminders;
 

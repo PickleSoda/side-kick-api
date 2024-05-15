@@ -1,9 +1,9 @@
-using SideKick.Application.Authentication.Queries.Login;
-using SideKick.Application.Common.Interfaces;
-
 using ErrorOr;
 
 using MediatR;
+
+using SideKick.Application.Authentication.Queries.Login;
+using SideKick.Application.Common.Interfaces;
 
 namespace SideKick.Application.Tokens.Queries.Generate;
 

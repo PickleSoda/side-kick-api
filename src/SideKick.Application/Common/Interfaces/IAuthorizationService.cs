@@ -1,6 +1,6 @@
-using SideKick.Application.Common.Security.Request;
-
 using ErrorOr;
+
+using SideKick.Application.Common.Security.Request;
 
 namespace SideKick.Application.Common.Interfaces;
 

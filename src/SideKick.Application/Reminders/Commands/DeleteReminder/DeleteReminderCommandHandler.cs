@@ -1,8 +1,6 @@
-using SideKick.Application.Common.Interfaces;
-
 using ErrorOr;
-
 using MediatR;
+using SideKick.Application.Common.Interfaces;
 
 namespace SideKick.Application.Reminders.Commands.DeleteReminder;
 

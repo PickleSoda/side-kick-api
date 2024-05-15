@@ -1,12 +1,12 @@
+using MediatR;
+
+using Microsoft.AspNetCore.Mvc;
+
 using SideKick.Application.Subscriptions.Commands.CancelSubscription;
 using SideKick.Application.Subscriptions.Commands.CreateSubscription;
 using SideKick.Application.Subscriptions.Common;
 using SideKick.Application.Subscriptions.Queries.GetSubscription;
 using SideKick.Contracts.Subscriptions;
-
-using MediatR;
-
-using Microsoft.AspNetCore.Mvc;
 
 using DomainSubscriptionType = SideKick.Domain.Users.SubscriptionType;
 using SubscriptionType = SideKick.Contracts.Common.SubscriptionType;

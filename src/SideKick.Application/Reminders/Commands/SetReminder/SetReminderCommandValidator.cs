@@ -1,6 +1,5 @@
-using SideKick.Application.Common.Interfaces;
-
 using FluentValidation;
+using SideKick.Application.Common.Interfaces;
 
 namespace SideKick.Application.Reminders.Commands.SetReminder;
 

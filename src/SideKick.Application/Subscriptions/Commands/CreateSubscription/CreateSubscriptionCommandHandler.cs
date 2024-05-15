@@ -1,11 +1,11 @@
+using ErrorOr;
+
+using MediatR;
+
 using SideKick.Application.Common.Interfaces;
 using SideKick.Application.Subscriptions.Common;
 using SideKick.Domain.Subscriptions;
 using SideKick.Domain.Users;
-
-using ErrorOr;
-
-using MediatR;
 
 namespace SideKick.Application.Subscriptions.Commands.CreateSubscription;
 

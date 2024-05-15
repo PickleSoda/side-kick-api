@@ -1,11 +1,11 @@
 using System.Reflection;
 
-using SideKick.Application.Common.Interfaces;
-using SideKick.Application.Common.Security.Request;
-
 using ErrorOr;
 
 using MediatR;
+
+using SideKick.Application.Common.Interfaces;
+using SideKick.Application.Common.Security.Request;
 
 namespace SideKick.Application.Common.Behaviors;
 

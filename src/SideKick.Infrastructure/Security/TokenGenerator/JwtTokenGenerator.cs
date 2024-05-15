@@ -2,11 +2,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-using SideKick.Application.Common.Interfaces;
-using SideKick.Domain.Users;
-
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+
+using SideKick.Application.Common.Interfaces;
+using SideKick.Domain.Users;
 
 namespace SideKick.Infrastructure.Security.TokenGenerator;
 

@@ -1,3 +1,7 @@
+using MediatR;
+
+using Microsoft.AspNetCore.Mvc;
+
 using SideKick.Application.Reminders.Commands.DeleteReminder;
 using SideKick.Application.Reminders.Commands.DismissReminder;
 using SideKick.Application.Reminders.Commands.SetReminder;
@@ -5,10 +9,6 @@ using SideKick.Application.Reminders.Queries.GetReminder;
 using SideKick.Application.Reminders.Queries.ListReminders;
 using SideKick.Contracts.Reminders;
 using SideKick.Domain.Reminders;
-
-using MediatR;
-
-using Microsoft.AspNetCore.Mvc;
 
 namespace SideKick.Api.Controllers;
 

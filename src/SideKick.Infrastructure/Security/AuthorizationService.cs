@@ -1,9 +1,10 @@
+using ErrorOr;
+
 using SideKick.Application.Common.Interfaces;
+
 using SideKick.Application.Common.Security.Request;
 using SideKick.Infrastructure.Security.CurrentUserProvider;
 using SideKick.Infrastructure.Security.PolicyEnforcer;
-
-using ErrorOr;
 
 namespace SideKick.Infrastructure.Security;
 

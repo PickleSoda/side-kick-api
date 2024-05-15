@@ -1,6 +1,9 @@
 using System.Net;
 using System.Net.Mail;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using SideKick.Application.Common.Interfaces;
 using SideKick.Infrastructure.Common;
 using SideKick.Infrastructure.Reminders.BackgroundServices;
@@ -12,11 +15,6 @@ using SideKick.Infrastructure.Security.TokenGenerator;
 using SideKick.Infrastructure.Security.TokenValidation;
 using SideKick.Infrastructure.Services;
 using SideKick.Infrastructure.Users.Persistence;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace SideKick.Infrastructure;
 

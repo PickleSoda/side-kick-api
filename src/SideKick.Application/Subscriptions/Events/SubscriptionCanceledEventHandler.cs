@@ -1,7 +1,7 @@
+using MediatR;
+
 using SideKick.Application.Common.Interfaces;
 using SideKick.Domain.Users.Events;
-
-using MediatR;
 
 namespace SideKick.Application.Subscriptions.Events;
 

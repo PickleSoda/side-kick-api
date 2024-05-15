@@ -1,8 +1,8 @@
+using ErrorOr;
+
 using SideKick.Application.Common.Security.Permissions;
 using SideKick.Application.Common.Security.Policies;
 using SideKick.Application.Common.Security.Request;
-
-using ErrorOr;
 
 namespace SideKick.Application.Reminders.Commands.DeleteReminder;
 
