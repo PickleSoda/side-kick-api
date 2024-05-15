@@ -1,7 +1,7 @@
-using SideKick.Infrastructure.Common;
-
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+
+using SideKick.Infrastructure.Common;
 
 namespace SideKick.Api.IntegrationTests.Common.WebApplicationFactory;
 
