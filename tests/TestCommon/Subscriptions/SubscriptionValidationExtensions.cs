@@ -1,7 +1,7 @@
+using FluentAssertions;
+
 using SideKick.Application.Subscriptions.Commands.CreateSubscription;
 using SideKick.Application.Subscriptions.Common;
-
-using FluentAssertions;
 
 namespace TestCommon.Subscriptions;
 

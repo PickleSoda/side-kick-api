@@ -1,12 +1,12 @@
-using SideKick.Application.Subscriptions.Commands.CreateSubscription;
-using SideKick.Application.Subscriptions.Common;
-using SideKick.Application.Subscriptions.Queries.GetSubscription;
-
 using ErrorOr;
 
 using FluentAssertions;
 
 using MediatR;
+
+using SideKick.Application.Subscriptions.Commands.CreateSubscription;
+using SideKick.Application.Subscriptions.Common;
+using SideKick.Application.Subscriptions.Queries.GetSubscription;
 
 namespace TestCommon.Subscriptions;
 

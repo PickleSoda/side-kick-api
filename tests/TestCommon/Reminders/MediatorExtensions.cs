@@ -1,13 +1,13 @@
-using SideKick.Application.Reminders.Commands.SetReminder;
-using SideKick.Application.Reminders.Queries.GetReminder;
-using SideKick.Application.Reminders.Queries.ListReminders;
-using SideKick.Domain.Reminders;
-
 using ErrorOr;
 
 using FluentAssertions;
 
 using MediatR;
+
+using SideKick.Application.Reminders.Commands.SetReminder;
+using SideKick.Application.Reminders.Queries.GetReminder;
+using SideKick.Application.Reminders.Queries.ListReminders;
+using SideKick.Domain.Reminders;
 
 namespace TestCommon.Reminders;
 

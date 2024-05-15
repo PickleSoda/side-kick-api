@@ -1,143 +1,155 @@
 using ErrorOr;
+using SideKick.Domain.Commitments;
 using SideKick.Domain.Common;
+using SideKick.Domain.GroupChats;
 using SideKick.Domain.Reminders;
 using SideKick.Domain.Subscriptions;
 using SideKick.Domain.Users.Events;
-
 using Throw;
 
-namespace SideKick.Domain.Users;
-
-public class User : Entity
+namespace SideKick.Domain.Users
 {
-    private readonly Calendar _calendar = null!;
+    public class User : Entity
+    {
+        private readonly Calendar _calendar = null!;
+        private readonly List<Guid> _reminderIds = new();
+        private readonly List<Guid> _dismissedReminderIds = new();
+        private readonly List<Commitment> _commitments = new();
+        private readonly List<GroupChat> _groupChats = new();
 
-    private readonly List<Guid> _reminderIds = [];
+        public Subscription Subscription { get; private set; } = null!;
+        public string Email { get; } = null!;
+        public string FirstName { get; } = null!;
+        public string LastName { get; } = null!;
 
-    private readonly List<Guid> _dismissedReminderIds = [];
-
-    public Subscription Subscription { get; private set; } = null!;
-
-    public string Email { get; } = null!;
-
-    public string FirstName { get; } = null!;
-
-    public string LastName { get; } = null!;
-
-    public User(
-        Guid id,
-        string firstName,
-        string lastName,
-        string email,
-        Subscription subscription,
-        Calendar? calendar = null)
+        public User(
+            Guid id,
+            string firstName,
+            string lastName,
+            string email,
+            Subscription subscription,
+            Calendar? calendar = null)
             : base(id)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        Subscription = subscription;
-        _calendar = calendar ?? Calendar.Empty();
-    }
-
-    public ErrorOr<Success> SetReminder(Reminder reminder)
-    {
-        if (Subscription == Subscription.Canceled)
         {
-            return Error.NotFound(description: "Subscription not found");
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Subscription = subscription;
+            _calendar = calendar ?? Calendar.Empty();
         }
 
-        reminder.SubscriptionId.Throw().IfNotEquals(Subscription.Id);
-
-        if (HasReachedDailyReminderLimit(reminder.DateTime))
+        public ErrorOr<Success> SetReminder(Reminder reminder)
         {
-            return UserErrors.CannotCreateMoreRemindersThanSubscriptionAllows;
+            if (Subscription == Subscription.Canceled)
+            {
+                return Error.NotFound(description: "Subscription not found");
+            }
+
+            reminder.SubscriptionId.Throw().IfNotEquals(Subscription.Id);
+
+            if (HasReachedDailyReminderLimit(reminder.DateTime))
+            {
+                return UserErrors.CannotCreateMoreRemindersThanSubscriptionAllows;
+            }
+
+            _calendar.IncrementEventCount(reminder.Date);
+            _reminderIds.Add(reminder.Id);
+            _domainEvents.Add(new ReminderSetEvent(reminder));
+
+            return Result.Success;
         }
 
-        _calendar.IncrementEventCount(reminder.Date);
-
-        _reminderIds.Add(reminder.Id);
-
-        _domainEvents.Add(new ReminderSetEvent(reminder));
-
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> DismissReminder(Guid reminderId)
-    {
-        if (Subscription == Subscription.Canceled)
+        public ErrorOr<Success> DismissReminder(Guid reminderId)
         {
-            return Error.NotFound(description: "Subscription not found");
+            if (Subscription == Subscription.Canceled)
+            {
+                return Error.NotFound(description: "Subscription not found");
+            }
+
+            if (!_reminderIds.Contains(reminderId))
+            {
+                return Error.NotFound(description: "Reminder not found");
+            }
+
+            if (_dismissedReminderIds.Contains(reminderId))
+            {
+                return Error.Conflict(description: "Reminder already dismissed");
+            }
+
+            _dismissedReminderIds.Add(reminderId);
+            _domainEvents.Add(new ReminderDismissedEvent(reminderId));
+
+            return Result.Success;
         }
 
-        if (!_reminderIds.Contains(reminderId))
+        public ErrorOr<Success> CancelSubscription(Guid subscriptionId)
         {
-            return Error.NotFound(description: "Reminder not found");
+            if (subscriptionId != Subscription.Id)
+            {
+                return Error.NotFound(description: "Subscription not found");
+            }
+
+            Subscription = Subscription.Canceled;
+            _domainEvents.Add(new SubscriptionCanceledEvent(this, subscriptionId));
+
+            return Result.Success;
         }
 
-        if (_dismissedReminderIds.Contains(reminderId))
+        public ErrorOr<Success> DeleteReminder(Reminder reminder)
         {
-            return Error.Conflict(description: "Reminder already dismissed");
+            if (Subscription == Subscription.Canceled)
+            {
+                return Error.NotFound(description: "Subscription not found");
+            }
+
+            if (!_reminderIds.Remove(reminder.Id))
+            {
+                return Error.NotFound(description: "Reminder not found");
+            }
+
+            _dismissedReminderIds.Remove(reminder.Id);
+            _calendar.DecrementEventCount(reminder.Date);
+            _domainEvents.Add(new ReminderDeletedEvent(reminder.Id));
+
+            return Result.Success;
         }
 
-        _dismissedReminderIds.Add(reminderId);
-
-        _domainEvents.Add(new ReminderDismissedEvent(reminderId));
-
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> CancelSubscription(Guid subscriptionId)
-    {
-        if (subscriptionId != Subscription.Id)
+        public void DeleteAllReminders()
         {
-            return Error.NotFound(description: "Subscription not found");
+            _reminderIds.ForEach(reminderId =>
+                _domainEvents.Add(new ReminderDeletedEvent(reminderId)));
+            _reminderIds.Clear();
         }
 
-        Subscription = Subscription.Canceled;
-
-        _domainEvents.Add(new SubscriptionCanceledEvent(this, subscriptionId));
-
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> DeleteReminder(Reminder reminder)
-    {
-        if (Subscription == Subscription.Canceled)
+        public ErrorOr<Success> AddCommitment(Commitment commitment)
         {
-            return Error.NotFound(description: "Subscription not found");
+            _commitments.Add(commitment);
+            return Result.Success;
         }
 
-        if (!_reminderIds.Remove(reminder.Id))
+        public ErrorOr<Success> AddGroupChat(GroupChat groupChat)
         {
-            return Error.NotFound(description: "Reminder not found");
+            _groupChats.Add(groupChat);
+            return Result.Success;
         }
 
-        _dismissedReminderIds.Remove(reminder.Id);
+        public List<Commitment> GetCommitments()
+        {
+            return _commitments;
+        }
 
-        _calendar.DecrementEventCount(reminder.Date);
+        public List<GroupChat> GetGroupChats()
+        {
+            return _groupChats;
+        }
 
-        _domainEvents.Add(new ReminderDeletedEvent(reminder.Id));
+        private bool HasReachedDailyReminderLimit(DateTimeOffset dateTime)
+        {
+            var dailyReminderCount = _calendar.GetNumEventsOnDay(dateTime.Date);
+            return dailyReminderCount >= Subscription.SubscriptionType.GetMaxDailyReminders()
+                || dailyReminderCount == int.MaxValue;
+        }
 
-        return Result.Success;
-    }
-
-    public void DeleteAllReminders()
-    {
-        _reminderIds.ForEach(reminderId => _domainEvents.Add(new ReminderDeletedEvent(reminderId)));
-
-        _reminderIds.Clear();
-    }
-
-    private bool HasReachedDailyReminderLimit(DateTimeOffset dateTime)
-    {
-        var dailyReminderCount = _calendar.GetNumEventsOnDay(dateTime.Date);
-
-        return dailyReminderCount >= Subscription.SubscriptionType.GetMaxDailyReminders()
-            || dailyReminderCount == int.MaxValue;
-    }
-
-    private User()
-    {
+        private User() { }
     }
 }

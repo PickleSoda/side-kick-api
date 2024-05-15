@@ -1,7 +1,7 @@
+using FluentAssertions;
+
 using SideKick.Application.Reminders.Commands.SetReminder;
 using SideKick.Domain.Reminders;
-
-using FluentAssertions;
 
 namespace TestCommon.Reminders;
 
