@@ -14,8 +14,8 @@ namespace SideKick.Domain.Users
         private readonly Calendar _calendar = null!;
         private readonly List<Guid> _reminderIds = new();
         private readonly List<Guid> _dismissedReminderIds = new();
-        private readonly List<Commitment> _commitments = new();
-        private readonly List<GroupChat> _groupChats = new();
+        private readonly List<Guid> _commitmentIds = new();  // Changed from List<Commitment>
+        private readonly List<Guid> _groupChatIds = new();   // Changed from List<GroupChat>
 
         public Subscription Subscription { get; private set; } = null!;
         public string Email { get; } = null!;
@@ -123,29 +123,54 @@ namespace SideKick.Domain.Users
 
         public ErrorOr<Success> AddCommitment(Commitment commitment)
         {
-            _commitments.Add(commitment);
+            _commitmentIds.Add(commitment.Id);
+            _domainEvents.Add(new CommitmentAddedEvent(commitment));
             return Result.Success;
+        }
+
+        public ErrorOr<Success> RemoveCommitment(Guid commitmentId)
+        {
+            if (_commitmentIds.Remove(commitmentId))
+            {
+                _domainEvents.Add(new CommitmentRemovedEvent(commitmentId, this.Id));
+                return Result.Success;
+            }
+
+            return Error.NotFound("Commitment not found");
         }
 
         public ErrorOr<Success> AddGroupChat(GroupChat groupChat)
         {
-            _groupChats.Add(groupChat);
+            _groupChatIds.Add(groupChat.Id);
+            _domainEvents.Add(new GroupChatAddedEvent(groupChat));
             return Result.Success;
         }
 
-        public List<Commitment> GetCommitments()
+        public ErrorOr<Success> RemoveGroupChat(Guid groupChatId)
         {
-            return _commitments;
+            if (_groupChatIds.Remove(groupChatId))
+            {
+                _domainEvents.Add(new GroupChatRemovedEvent(groupChatId, this.Id));
+                return Result.Success;
+            }
+
+            return Error.NotFound("Group chat not found");
         }
 
-        public List<GroupChat> GetGroupChats()
+        public List<Guid> GetCommitmentIds()
         {
-            return _groupChats;
+            return new List<Guid>(_commitmentIds);
+        }
+
+        public List<Guid> GetGroupChatIds()
+        {
+            return new List<Guid>(_groupChatIds);
         }
 
         private bool HasReachedDailyReminderLimit(DateTimeOffset dateTime)
         {
             var dailyReminderCount = _calendar.GetNumEventsOnDay(dateTime.Date);
+
             return dailyReminderCount >= Subscription.SubscriptionType.GetMaxDailyReminders()
                 || dailyReminderCount == int.MaxValue;
         }

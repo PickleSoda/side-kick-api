@@ -6,8 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SideKick.Application.Common.Interfaces;
 using SideKick.Infrastructure.Common;
+using SideKick.Infrastructure.Habits.Persistence;
 using SideKick.Infrastructure.Reminders.BackgroundServices;
 using SideKick.Infrastructure.Reminders.Persistence;
+using SideKick.Infrastructure.ReminderSchedules.Persistence;
 using SideKick.Infrastructure.Security;
 using SideKick.Infrastructure.Security.CurrentUserProvider;
 using SideKick.Infrastructure.Security.PolicyEnforcer;
@@ -80,7 +82,8 @@ public static class DependencyInjection
 
         services.AddScoped<IRemindersRepository, RemindersRepository>();
         services.AddScoped<IUsersRepository, UsersRepository>();
-
+        services.AddScoped<IHabitsRepository, HabitsRepository>();
+        services.AddScoped<IReminderSchedulesRepository, ReminderSchedulesRepository>();
         return services;
     }
 

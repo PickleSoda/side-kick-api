@@ -1,16 +1,15 @@
 using ErrorOr;
-
 using SideKick.Domain.Common;
 
 namespace SideKick.Domain.Reminders;
 
 public class Reminder : Entity
 {
-    public Guid UserId { get; }
+    public Guid UserId { get; private set; }
 
-    public Guid SubscriptionId { get; }
+    public Guid SubscriptionId { get; private set; }
 
-    public DateTime DateTime { get; }
+    public DateTime DateTime { get; private set; }
 
     public DateOnly Date => DateOnly.FromDateTime(DateTime.Date);
 
@@ -18,11 +17,14 @@ public class Reminder : Entity
 
     public bool IsDismissed { get; private set; }
 
+    public Guid CommitmentId { get; private set; }
+
     public Reminder(
         Guid userId,
         Guid subscriptionId,
         string text,
         DateTime dateTime,
+        Guid? commitmentId = null,
         Guid? id = null)
             : base(id ?? Guid.NewGuid())
     {
@@ -30,6 +32,7 @@ public class Reminder : Entity
         SubscriptionId = subscriptionId;
         Text = text;
         DateTime = dateTime;
+        CommitmentId = commitmentId ?? Guid.Empty;
     }
 
     public ErrorOr<Success> Dismiss()
@@ -44,6 +47,7 @@ public class Reminder : Entity
         return Result.Success;
     }
 
+    // Ensure this parameterless constructor is only for EF purposes if using EF
     private Reminder()
     {
     }

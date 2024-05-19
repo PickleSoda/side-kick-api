@@ -1,24 +1,39 @@
 using System;
 using System.Collections.Generic;
 using SideKick.Domain.Habits;
-using SideKick.Domain.Reminders;
-using TestCommon.Reminders;
+using TestCommon.ReminderSchedules;
 using TestCommon.TestConstants;
+
 namespace TestCommon.Habits
 {
-       public static class HabitFactory
+    public static class HabitFactory
     {
         public static Habit CreateHabit(
             Guid? id = null,
             string name = Constants.Habit.Name,
             string description = Constants.Habit.Description,
-            List<Reminder>? reminders = null)
+            List<Guid>? reminderIds = null)
         {
-            return new Habit(
+            var habit = new Habit(
                 id ?? Constants.Habit.Id,
                 name,
-                description,
-                reminders ?? new List<Reminder> { ReminderFactory.CreateReminder() });
+                description);
+
+            if (reminderIds != null)
+            {
+                foreach (var reminderId in reminderIds)
+                {
+                    var reminder = ReminderScheduleFactory.CreateOneTimeReminder(id: reminderId);
+                    habit.AddReminder(reminder);
+                }
+            }
+            else
+            {
+                var reminder = ReminderScheduleFactory.CreateOneTimeReminder();
+                habit.AddReminder(reminder);
+            }
+
+            return habit;
         }
     }
 }

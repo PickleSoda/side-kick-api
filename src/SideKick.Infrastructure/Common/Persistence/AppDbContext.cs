@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 using SideKick.Domain.Common;
+using SideKick.Domain.Habits;
 using SideKick.Domain.Reminders;
+using SideKick.Domain.ReminderSchedules;
 using SideKick.Domain.Users;
 using SideKick.Infrastructure.Common.Middleware;
 
@@ -15,6 +17,10 @@ public class AppDbContext(DbContextOptions options, IHttpContextAccessor _httpCo
     public DbSet<Reminder> Reminders { get; set; } = null!;
 
     public DbSet<User> Users { get; set; } = null!;
+
+    public DbSet<Habit> Habits { get; set; } = null!;
+
+    public DbSet<ReminderSchedule> ReminderSchedules { get; set; } = null!;
 
     public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

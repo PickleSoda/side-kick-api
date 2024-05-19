@@ -1,0 +1,8 @@
+POST {{host}}/api/habits
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "biking",
+  "description": "weewoo"
+}

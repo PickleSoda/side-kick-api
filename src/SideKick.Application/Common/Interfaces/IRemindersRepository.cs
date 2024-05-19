@@ -1,5 +1,4 @@
 using SideKick.Domain.Reminders;
-
 namespace SideKick.Application.Common.Interfaces;
 
 public interface IRemindersRepository
@@ -7,6 +6,7 @@ public interface IRemindersRepository
     Task AddAsync(Reminder reminder, CancellationToken cancellationToken);
     Task<Reminder?> GetByIdAsync(Guid reminderId, CancellationToken cancellationToken);
     Task<List<Reminder>> ListBySubscriptionIdAsync(Guid subscriptionId, CancellationToken cancellationToken);
+    Task<List<Reminder>> ListByCommitmentIdAsync(Guid commitmentId, CancellationToken cancellationToken);
     Task RemoveAsync(Reminder reminder, CancellationToken cancellationToken);
     Task RemoveRangeAsync(List<Reminder> reminders, CancellationToken cancellationToken);
     Task UpdateAsync(Reminder reminder, CancellationToken cancellationToken);

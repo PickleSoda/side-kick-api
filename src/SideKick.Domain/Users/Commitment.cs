@@ -38,13 +38,13 @@ namespace SideKick.Domain.Commitments
             Status = status;
         }
 
-        public static Commitment CreateFromHabit(Guid creatorId, Habit habit, int lengthInDays)
+        public static Commitment CreateFromHabit(Guid creatorId, Habit habit, int lengthInDays, IEnumerable<Reminder> reminders)
         {
             var commitmentId = Guid.NewGuid();
-            var reminders = habit.Reminders.ConvertAll(reminder =>
-                new Reminder(creatorId, reminder.SubscriptionId, reminder.Text, DateTime.Now.AddDays(reminder.DateTime.Day), commitmentId));
+            var linkedReminders = reminders.Select(reminder =>
+                new Reminder(creatorId, reminder.SubscriptionId, reminder.Text, DateTime.Now.AddDays(reminder.DateTime.Day), commitmentId, habit.Id)).ToList();
 
-            return new Commitment(commitmentId, habit, CommitmentStatus.Pending, lengthInDays, creatorId, reminders);
+            return new Commitment(commitmentId, habit, CommitmentStatus.Pending, lengthInDays, creatorId, linkedReminders);
         }
     }
 

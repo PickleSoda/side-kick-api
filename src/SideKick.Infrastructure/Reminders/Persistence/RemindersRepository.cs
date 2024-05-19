@@ -27,6 +27,14 @@ public class RemindersRepository(AppDbContext _dbContext) : IRemindersRepository
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<List<Reminder>> ListByCommitmentIdAsync(Guid commitmentId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Reminders
+            .AsNoTracking()
+            .Where(reminder => reminder.CommitmentId == commitmentId)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task RemoveAsync(Reminder reminder, CancellationToken cancellationToken)
     {
         _dbContext.Remove(reminder);

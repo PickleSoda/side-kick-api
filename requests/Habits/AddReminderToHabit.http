@@ -1,0 +1,21 @@
+POST {{host}}/api/habits/{{habitId}}/reminders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "textTemplate": "asdf",
+  "reminderTime": "2024-06-19T22:50:40.263Z",
+  "reminderType": "Recurrent",
+  "requiresConfirmation": true,
+  "isActive": true,
+  "priority": 3,
+  "dayIndex": 0,
+  "dayOfCommitment": 0,
+  "mon": true,
+  "tue": true,
+  "wed": true,
+  "thu": true,
+  "fri": true,
+  "sat": true,
+  "sun": true
+}

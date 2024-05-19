@@ -17,7 +17,7 @@ namespace TestCommon.Commitments
         {
             return new Commitment(
                 id ?? Guid.NewGuid(),
-                targetHabit ?? new Habit(Constants.Habit.Id, Constants.Habit.Name, Constants.Habit.Description, new List<Reminder>()),
+                targetHabit ?? new Habit(Constants.Habit.Id, Constants.Habit.Name, Constants.Habit.Description),
                 status,
                 lengthInDays,
                 creatorId ?? Constants.User.Id,
