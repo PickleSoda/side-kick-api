@@ -3,4 +3,4 @@ using SideKick.Domain.ReminderSchedules;
 
 namespace SideKick.Domain.Users.Events;
 
-public record ReminderAddedToHabitEvent(ReminderSchedule Reminder) : IDomainEvent;
+public record ReminderAddedToHabitEvent(ReminderSchedule ReminderSchedule) : IDomainEvent;

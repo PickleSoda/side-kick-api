@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using SideKick.Application.Habits.Commands.AddReminderToHabit;
 using SideKick.Application.Habits.Commands.CreateHabit;
@@ -96,6 +95,7 @@ namespace SideKick.Api.Controllers
         [HttpGet("{habitId:guid}")]
         public async Task<IActionResult> GetHabit(Guid habitId)
         {
+            Console.WriteLine("GetHabit: " + habitId);
             var query = new GetHabitQuery(habitId);
 
             var result = await _mediator.Send(query);
@@ -125,6 +125,15 @@ namespace SideKick.Api.Controllers
                 habit.Id,
                 habit.Name,
                 habit.Description);
+        }
+
+        private HabitWithRemindersResponse ToDto(HabitWithReminders habitWithReminders)
+        {
+            return new HabitWithRemindersResponse(
+                habitWithReminders.Habit.Id,
+                habitWithReminders.Habit.Name,
+                habitWithReminders.Habit.Description,
+                habitWithReminders.Reminders.ConvertAll(ToDto));
         }
 
         private ReminderScheduleResponse ToDto(ReminderSchedule reminderSchedule)

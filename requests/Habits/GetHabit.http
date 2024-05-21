@@ -1,0 +1,2 @@
+GET {{host}}/api/habits/{{habitId}}
+Authorization: Bearer {{token}}
